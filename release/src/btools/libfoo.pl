@@ -58,7 +58,7 @@ sub load
 	$base = basename($fname);
 	print LOG "\n\nreadelf $base:\n";
 	
-	open($f, "mipsel-linux-readelf -WhsdD ${fname} 2>&1 |") || error("readelf - $!\n");
+	open($f, "/opt/brcm/hndtools-mipsel-linux/bin/mipsel-linux-readelf -WhsdD ${fname} 2>&1 |") || error("readelf - $!\n");
 	
 	while (<$f>) {
 		print LOG;
@@ -424,7 +424,7 @@ sub genSO
 
 	print LOG "\n\n${base}\n";
 	
-	$cmd = "mipsel-uclibc-ld -shared -s -z combreloc --warn-common --fatal-warnings ${opt} -soname ${name} -o ${so}";
+	$cmd = "/opt/brcm/hndtools-mipsel-linux/bin/mipsel-uclibc-ld -shared -s -z combreloc --warn-common --fatal-warnings ${opt} -soname ${name} -o ${so}";
 	foreach (@{$elf_lib{$name}}) {
 		if ((!$elf_dyn{$name}{$_}) && (/^lib(.+)\.so/)) {
 			$cmd .= " -l$1";
