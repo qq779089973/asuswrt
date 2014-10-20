@@ -32,7 +32,7 @@ export TOOLS := $(SRCBASE)/toolchains/hndtools-arm-linux-2.6.36-uclibc-4.5.3
 export RTVER := 0.9.32.1
 else
 export PLATFORM := mipsel-uclibc
-export CROSS_COMPILE := mipsel-uclibc-
+export CROSS_COMPILE := /opt/brcm/hndtools-mipsel-linux/bin/mipsel-uclibc-
 export CROSS_COMPILER := $(CROSS_COMPILE)
 export CONFIGURE := ./configure --host=mipsel-linux --build=$(BUILD)
 export HOSTCONFIG := linux-mipsel
