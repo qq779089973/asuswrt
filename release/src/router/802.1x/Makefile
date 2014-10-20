@@ -6,7 +6,7 @@ include ../common.mak
 PLATFORM = RT2880
 
 ifeq ($(PLATFORM),RT2880)
-CROSS_COMPILE = mipsel-linux-
+CROSS_COMPILE = /opt/brcm/hndtools-mipsel-linux/bin/mipsel-linux-
 endif
 
 ifeq ($(PLATFORM),5VT)
