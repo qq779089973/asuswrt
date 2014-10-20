@@ -1,0 +1,5 @@
+!.gitignore
+
+./tools/brcm ./tools/buildroot-gcc342 ./tools/README.TXT
+./toolchain/BSDmakefile ./toolchain/build24.sh ./toolchain/build26.sh ./toolchain/config.2.4-3.4.6 ./toolchain/config.2.4-4.1.2 ./toolchain/config.2.4-4.2.4 ./toolchain/config.2.6-4.1.2 ./toolchain/config.2.6-4.2.4 ./toolchain/Config.in ./toolchain/defconfig ./toolchain/include ./toolchain/LICENSE ./toolchain/Makefile ./toolchain/rules.mk ./toolchain/scripts ./toolchain/toolchain ./toolchain/tools
+./release/tools/nvserial
