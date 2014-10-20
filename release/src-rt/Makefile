@@ -197,7 +197,7 @@ endif
 ifeq ($(CONFIG_RALINK),y)
 	# generate kernel part
 	@rm -rf $(PLATFORMDIR)/zImage.lzma ; \
-	mipsel-linux-objcopy -O binary $(LINUXDIR)/vmlinux $(PLATFORMDIR)/vmlinus ; \
+	/opt/brcm/hndtools-mipsel-linux/mipsel-linux/bin/mipsel-linux-objcopy -O binary $(LINUXDIR)/vmlinux $(PLATFORMDIR)/vmlinus ; \
 	asustools/lzma -9 -f -c $(PLATFORMDIR)/vmlinus > $(PLATFORMDIR)/zImage.lzma ; \
 	cp -f $(PLATFORMDIR)/zImage.lzma $(PLATFORMDIR)/zImage.img ; \
 	# padded kernel image size
