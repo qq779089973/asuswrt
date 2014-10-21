@@ -9263,4 +9263,10 @@ release/src/xz/tests/Makefile.in
 release/tools/
 toolchain/
 tools/
+release/src/router/libdaemon/autom4te.cache/
+release/src/router/libxml2/autom4te.cache/
+release/src/router/lighttpd-1.4.29/autom4te.cache/
+release/src/router/pcre-8.31/autom4te.cache/
+release/src/router/radvd/autom4te.cache/
+release/src/router/sqlite/autom4te.cache/
 
