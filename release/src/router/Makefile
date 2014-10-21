@@ -120,6 +120,7 @@ obj-y += rt2880_app
 else
 obj-y += ated
 obj-y += flash
+obj-y += gpio
 ifeq ($(RTN14U)$(RTAC52U)$(RTAC51U),y)
 else
 obj-y += hw_nat
