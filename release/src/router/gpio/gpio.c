@@ -28,7 +28,50 @@
 #include <linux/autoconf.h>
 #include "ralink_gpio.h"
 
-#define GPIO_DEV	"/dev/gpio"
+#define GPIO_DEV	"/dev/gpio0"
+
+
+#define	RALINK_GPIO_READ_BIT		0x04
+#define	RALINK_GPIO_WRITE_BIT		0x05
+#define	RALINK_GPIO_READ_BYTE		0x06
+#define	RALINK_GPIO_WRITE_BYTE		0x07
+#define	RALINK_GPIO_READ_INT		0x02 //same as read
+#define	RALINK_GPIO_WRITE_INT		0x03 //same as write
+#define	RALINK_GPIO_SET_INT		0x21 //same as set
+#define	RALINK_GPIO_CLEAR_INT		0x31 //same as clear
+#define RALINK_GPIO_ENABLE_INTP		0x08
+#define RALINK_GPIO_DISABLE_INTP	0x09
+#define RALINK_GPIO_REG_IRQ		0x0A
+#define RALINK_GPIO_LED_SET		0x41
+#define RALINK_SET_GPIO_MODE		0x42
+
+//gpio 0~23
+#define	RALINK_GPIO2300_SET_DIR		0x01 
+#define RALINK_GPIO2300_SET_DIR_IN	0x11
+#define RALINK_GPIO2300_SET_DIR_OUT	0x12
+#define	RALINK_GPIO2300_READ		0x02
+#define	RALINK_GPIO2300_WRITE		0x03
+#define	RALINK_GPIO2300_SET		0x21
+#define	RALINK_GPIO2300_CLEAR		0x31
+//gpio 24~39
+#define RALINK_GPIO3924_SET_DIR         0x51
+#define RALINK_GPIO3924_SET_DIR_IN      0x13
+#define RALINK_GPIO3924_SET_DIR_OUT     0x14
+#define RALINK_GPIO3924_READ            0x52
+#define RALINK_GPIO3924_WRITE           0x53
+#define RALINK_GPIO3924_SET             0x22
+#define RALINK_GPIO3924_CLEAR           0x32
+//gpio 40~71
+#define RALINK_GPIO7140_SET_DIR         0x61
+#define RALINK_GPIO7140_SET_DIR_IN      0x15
+#define RALINK_GPIO7140_SET_DIR_OUT     0x16
+#define RALINK_GPIO7140_READ            0x62
+#define RALINK_GPIO7140_WRITE           0x63
+#define RALINK_GPIO7140_SET             0x23
+#define RALINK_GPIO7140_CLEAR           0x33
+//GPIO72 is WLAN_LED
+#define RALINK_ATE_GPIO72		0x35
+
 
 enum {
 	gpio_in,
@@ -673,7 +716,170 @@ void usage(char *cmd)
 	printf("       %s i (<gpio>) - interrupt test for gpio number\n", cmd);
 	printf("       %s l <gpio> <on> <off> <blinks> <rests> <times>\n", cmd);
 	printf("            - set led on <gpio>(0~24) on/off interval, no. of blinking/resting cycles, times of blinking\n");
+	printf("       %s t <r> <gpio number>\n", cmd);
+	printf("       %s t <w> <gpio number> <value>\n", cmd);
 	exit(0);
+}
+
+int
+ralink_gpio_init(unsigned int idx, int dir)
+{
+	int fd, req;
+	unsigned long arg;
+	
+#if defined(RTN14U) || defined(RTAC52U) || defined(RTAC51U)
+	if(idx==72) //discard gpio72
+		return 0;
+#endif
+
+	fd = open(GPIO_DEV, O_RDONLY);
+	if (fd < 0) {
+		perror(GPIO_DEV);
+		return -1;
+	}
+	if (dir == gpio_in) {
+		if (idx <= 23)  //gpio 0~23
+		{   
+			req = RALINK_GPIO2300_SET_DIR_IN;
+			arg=1<<idx;
+		}	
+		else if ((idx > 23) && (idx <= 39))  //gpio 24~39
+		{	
+	   	 	  req = RALINK_GPIO3924_SET_DIR_IN;
+			  arg=1<<(idx-24);
+		}	  
+		else if ((idx > 39) && (idx <= 71))  //gpio 40~71
+		{	
+	   		  req = RALINK_GPIO7140_SET_DIR_IN;
+			  arg=1<<(idx-40);
+		}	  
+		else
+			return -1;
+	}
+	else {
+		if (idx <= 23)  //gpio 0~23
+		{   
+			req = RALINK_GPIO2300_SET_DIR_OUT;
+			arg=1<<idx;
+		}	
+		else if ((idx > 23) && (idx <= 39))  //gpio 24~39
+		{	
+	   	 	 req = RALINK_GPIO3924_SET_DIR_OUT;
+			 arg=1<<(idx-24);
+		}	 
+		else if ((idx > 39) && (idx <= 71))  //gpio 40~71
+		{	
+	   	 	  req = RALINK_GPIO7140_SET_DIR_OUT;
+			  arg=1<<(idx-40);
+		}		
+		else
+			return -1;
+	}
+
+	if (ioctl(fd, req, arg) < 0) {
+		perror("ioctl");
+		close(fd);
+		return -1;
+	}
+	close(fd);
+	return 0;
+}
+
+
+int
+ralink_gpio_read_bit(int idx)
+{
+ 	unsigned long value;
+	int fd;
+	unsigned int req;
+
+     	ralink_gpio_init(idx,gpio_in);
+	value = 0;
+	fd = open(GPIO_DEV, O_RDONLY);
+	if (fd < 0) {
+		perror(GPIO_DEV);
+		return -1;
+	}
+
+
+	if(idx<=23)   
+		 req = RALINK_GPIO2300_READ;
+	else if (idx>23 && idx<=39)
+	{
+		idx-=24;   
+	   	 req= RALINK_GPIO3924_READ;
+	}	 
+	else if (idx>39 && idx <=71)
+	{	 
+	   	idx-=40;
+   	 	req= RALINK_GPIO7140_READ;
+	}	
+	else
+		return -1;
+
+	if (ioctl(fd, req, &value) < 0) {
+		perror("ioctl");
+		close(fd);
+		return -1;
+	}
+	close(fd);
+
+	value=(value>>idx)&1;
+  	return value;
+}
+
+int
+ralink_gpio_write_bit(int idx, int value)
+{
+	int fd;
+       unsigned int req;
+
+	ralink_gpio_init(idx, gpio_out);
+	fd = open(GPIO_DEV, O_RDONLY);
+	if (fd < 0) {
+		perror(GPIO_DEV);
+		return -1;
+	}
+	
+	if (idx<=23)
+	{
+		if(value)
+		   req=RALINK_GPIO2300_SET;
+		else
+		   req=RALINK_GPIO2300_CLEAR;
+	
+	}   
+	else if (idx>23 && idx<=39)
+	{	
+  	  	idx -=24;
+		if(value)
+		   req=RALINK_GPIO3924_SET;
+		else
+		   req=RALINK_GPIO3924_CLEAR;
+	}	
+	else if (idx>39 && idx <=71)
+	{	
+  	 	idx -=40;
+		if(value)
+		   req=RALINK_GPIO7140_SET;
+		else
+		   req=RALINK_GPIO7140_CLEAR;
+	}	
+	else if (idx==72) 
+	{              
+		req=RALINK_ATE_GPIO72;
+		idx=value;	
+	}   
+	else
+		return -1;
+
+	if (ioctl(fd, req, (1<<idx)) < 0) {
+		perror("ioctl");
+		close(fd);
+		return -1;
+	}
+	close(fd);
+	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -698,6 +904,19 @@ int main(int argc, char *argv[])
 		if (argc != 8)
 			usage(argv[0]);
 		gpio_set_led(argc, argv);
+		break;
+	case 't':
+		if (argc == 4 && argv[2][0] == 'r' )
+		{
+			printf("read gpio ping %d,value is %d",atoi(argv[3]),ralink_gpio_read_bit(atoi(argv[3])));
+		}
+		else if (argc ==5 && argv[2][0] == 'w' )
+		{
+			ralink_gpio_write_bit(atoi(argv[3]), atoi(argv[4]));
+			printf("write gpio ping %d,value is %d",atoi(argv[3]),atoi(argv[4]));
+		}
+		else
+			usage(argv[0]);
 		break;
 	default:
 		usage(argv[0]);

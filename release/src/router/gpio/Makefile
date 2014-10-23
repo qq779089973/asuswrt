@@ -1,6 +1,6 @@
 include ../common.mak
 
-CFLAGS += -I. -I$(LINUXDIR)/drivers/char -I$(LINUXDIR)/include/asm/mach-ralink -DCONFIG_RALINK_MT7620
+CFLAGS += -I. -I$(TOP)/shared/sysdeps/ralink -DRTCONFIG_RALINK_MT7620
 EXEC = gpio
 
 all: $(EXEC)

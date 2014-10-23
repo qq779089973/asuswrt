@@ -3534,9 +3534,7 @@ static void sysinit(void)
 		snprintf(s, sizeof(s), "/dev/%s", dn[i]);
 		chmod(s, 0666);
 	}
-	//chmod("/dev/gpio", 0660);
-	printf("\n\nCreate Node for /dev/gpio\n\n");
-	MKNOD("/dev/gpio", S_IFCHR | 0660, makedev(252,0));
+	chmod("/dev/gpio", 0660);
 #endif
 
 	set_action(ACT_IDLE);
