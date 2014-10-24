@@ -335,6 +335,11 @@ void btn_check(void)
 		_dprintf("\nbutton power pressed \n");
 		led_control(LED_RED, LED_ON);
 		led_control(LED_BLUE, LED_OFF);
+		if(eval("/sbin/ejusb", "-1", "0")==0) //调用api卸载usb
+		{	
+			_dprintf("\nPower off \n");
+			
+		}
 	}
 	else
 	{
