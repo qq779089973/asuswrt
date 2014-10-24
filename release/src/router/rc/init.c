@@ -1478,6 +1478,8 @@ int init_nvram(void)
 	nvram_set_int("btn_wps_gpio", 0xff);
 	nvram_set_int("btn_radio_gpio", 0xff);
 	nvram_set_int("led_pwr_gpio", 0xff);
+	nvram_set_int("led_red_gpio", 0xff);
+	nvram_set_int("led_blue_gpio", 0xff);
 	nvram_set_int("led_wps_gpio", 0xff);
 	nvram_set_int("pwr_usb_gpio", 0xff);
 	nvram_set_int("pwr_usb_gpio2", 0xff);
@@ -1707,6 +1709,8 @@ int init_nvram(void)
 		nvram_set_int("led_pwr_gpio", 43|GPIO_ACTIVE_LOW);
 		nvram_set_int("led_wps_gpio", 43|GPIO_ACTIVE_LOW);
 		nvram_set_int("led_2g_gpio", 72|GPIO_ACTIVE_LOW);
+		nvram_set_int("led_red_gpio", 22|GPIO_ACTIVE_LOW);
+		nvram_set_int("led_blue_gpio", 13|GPIO_ACTIVE_LOW);
 
 		nvram_set("ehci_ports", "1-1");
 		nvram_set("ohci_ports", "2-1");

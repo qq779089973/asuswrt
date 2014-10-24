@@ -29,6 +29,8 @@ int btn_rst_gpio = 0x0ff;
 int btn_pwr_gpio = 0x0ff;
 int btn_wps_gpio = 0xff;
 int led_pwr_gpio = 0xff;
+int led_red_gpio = 0xff;
+int led_blue_gpio = 0xff;
 int led_wps_gpio = 0xff;
 int led_usb_gpio = 0xff;
 int led_usb3_gpio = 0xff;
@@ -83,7 +85,7 @@ int init_gpio(void)
 		, "btn_swmode1_gpio", "btn_swmode2_gpio", "btn_swmode3_gpio"
 #endif
 		, "btn_turbo_gpio", "btn_led_gpio" };
-	char *led_list[] = { "led_turbo_gpio", "led_pwr_gpio", "led_usb_gpio", "led_wps_gpio", "fan_gpio", "have_fan_gpio", "led_lan_gpio", "led_wan_gpio", "led_usb3_gpio", "led_2g_gpio", "led_5g_gpio" 
+	char *led_list[] = { "led_turbo_gpio", "led_pwr_gpio", "led_usb_gpio", "led_wps_gpio", "fan_gpio", "have_fan_gpio", "led_lan_gpio", "led_wan_gpio", "led_usb3_gpio", "led_2g_gpio", "led_5g_gpio" , "led_red_gpio", "led_blue_gpio"
 #ifdef RTCONFIG_LAN4WAN_LED
 		, "led_lan1_gpio", "led_lan2_gpio", "led_lan3_gpio", "led_lan4_gpio"
 #endif  /* LAN4WAN_LED */
@@ -123,6 +125,18 @@ int init_gpio(void)
 	}
 
 	if((gpio_pin = (use_gpio = nvram_get_int("led_pwr_gpio")) & 0xff) != 0xff)
+	{
+		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
+		set_gpio(gpio_pin, enable);
+	}
+
+	//init led_red and led blue
+	if((gpio_pin = (use_gpio = nvram_get_int("led_red_gpio")) & 0xff) != 0xff)
+	{
+		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
+		set_gpio(gpio_pin, enable);
+	}
+	if((gpio_pin = (use_gpio = nvram_get_int("led_blue_gpio")) & 0xff) != 0xff)
 	{
 		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
 		set_gpio(gpio_pin, enable);
@@ -188,6 +202,8 @@ void get_gpio_values_once(void)
 	led_wps_gpio = nvram_get_int("led_wps_gpio");
 	led_2g_gpio = nvram_get_int("led_2g_gpio");
 	led_5g_gpio = nvram_get_int("led_5g_gpio");
+	led_red_gpio = nvram_get_int("led_red_gpio");
+	led_blue_gpio = nvram_get_int("led_blue_gpio");
 #ifdef RTCONFIG_LAN4WAN_LED
 	led_lan1_gpio = nvram_get_int("led_lan1_gpio");
 	led_lan2_gpio = nvram_get_int("led_lan2_gpio");
@@ -310,6 +326,12 @@ int led_control(int which, int mode)
 	switch(which) {
 		case LED_POWER:
 			use_gpio = led_pwr_gpio;
+			break;
+		case LED_RED:
+			use_gpio = led_red_gpio;
+			break;
+		case LED_BLUE:
+			use_gpio = led_blue_gpio;
 			break;
 		case LED_USB:
 			use_gpio = led_usb_gpio;

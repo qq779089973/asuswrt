@@ -356,6 +356,8 @@ extern int f_wait_notexists(const char *name, int max);
 #ifdef RTCONFIG_QTN
 #define BTN_QTN_RESET			15
 #endif
+#define LED_RED				16
+#define LED_BLUE			17
 
 #define	LED_OFF				0
 #define	LED_ON				1

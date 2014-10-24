@@ -333,6 +333,8 @@ void btn_check(void)
 	else if (button_pressed(BTN_PWR))//此处逻辑需要修改
 	{
 		_dprintf("\nbutton power pressed \n");
+		led_control(LED_RED, LED_ON);
+		led_control(LED_BLUE, LED_OFF);
 	}
 	else
 	{
