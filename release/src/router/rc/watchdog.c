@@ -177,6 +177,9 @@ int init_toggle(void)
 
 void btn_check(void)
 {
+	int cdisk_power_gpio,cdisk_use_gpio,ena;
+	
+	
 	if (nvram_match("asus_mfg", "1"))
 	{
 		//TRACE_PT("asus mfg btn check!!!\n");
@@ -330,16 +333,17 @@ void btn_check(void)
 			}
 	}
 #endif
-	else if (button_pressed(BTN_PWR))//此处逻辑需要修改
+	else if (!button_pressed(BTN_PWR))//此处逻辑需要修改
 	{
 		_dprintf("\nbutton power pressed \n");
 		led_control(LED_RED, LED_ON);
-		led_control(LED_BLUE, LED_OFF);
+	//	led_control(LED_BLUE, LED_OFF);
 		if(eval("/sbin/ejusb", "-1", "0")==0) //调用api卸载usb
 		{	
-			_dprintf("\nPower off \n");
-			
+			_dprintf("\nGo TO Halt \n");
+			eval("halt");
 		}
+		
 	}
 	else
 	{

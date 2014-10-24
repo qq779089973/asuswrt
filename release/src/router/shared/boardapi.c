@@ -85,7 +85,7 @@ int init_gpio(void)
 		, "btn_swmode1_gpio", "btn_swmode2_gpio", "btn_swmode3_gpio"
 #endif
 		, "btn_turbo_gpio", "btn_led_gpio" };
-	char *led_list[] = { "led_turbo_gpio", "led_pwr_gpio", "led_usb_gpio", "led_wps_gpio", "fan_gpio", "have_fan_gpio", "led_lan_gpio", "led_wan_gpio", "led_usb3_gpio", "led_2g_gpio", "led_5g_gpio" , "led_red_gpio", "led_blue_gpio"
+	char *led_list[] = { "led_turbo_gpio", "led_pwr_gpio", "led_usb_gpio", "led_wps_gpio", "fan_gpio", "have_fan_gpio", "led_lan_gpio", "led_wan_gpio", "led_usb3_gpio", "led_2g_gpio", "led_5g_gpio" , "led_red_gpio", "led_blue_gpio", "ctrl_pwr_gpio"
 #ifdef RTCONFIG_LAN4WAN_LED
 		, "led_lan1_gpio", "led_lan2_gpio", "led_lan3_gpio", "led_lan4_gpio"
 #endif  /* LAN4WAN_LED */
@@ -128,6 +128,14 @@ int init_gpio(void)
 	{
 		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
 		set_gpio(gpio_pin, enable);
+	}
+	
+	//hold power gpio
+	if((gpio_pin = (use_gpio = nvram_get_int("ctrl_pwr_gpio")) & 0xff) != 0xff)
+	{
+		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
+		set_gpio(gpio_pin, enable);
+		_dprintf("\ndebug gpio: %d value: %d\n", gpio_pin, enable);
 	}
 
 	//init led_red and led blue
