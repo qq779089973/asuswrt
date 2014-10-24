@@ -330,6 +330,8 @@ extern int f_wait_notexists(const char *name, int max);
 #define BTN_WIFI_TOG			8
 #define BTN_TURBO			9
 #define BTN_LED				0xA
+#define BTN_PWR				0xB
+
 
 #define LED_POWER			0
 #define LED_USB				1

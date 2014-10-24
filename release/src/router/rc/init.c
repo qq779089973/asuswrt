@@ -1474,6 +1474,7 @@ int init_nvram(void)
 	nvram_unset(ASUS_STOP_COMMIT);
 	nvram_set("rc_support", "");
 	nvram_set_int("btn_rst_gpio", 0xff);
+	nvram_set_int("btn_pwr_gpio", 0xff);
 	nvram_set_int("btn_wps_gpio", 0xff);
 	nvram_set_int("btn_radio_gpio", 0xff);
 	nvram_set_int("led_pwr_gpio", 0xff);
@@ -1698,6 +1699,7 @@ int init_nvram(void)
 		set_basic_ifname_vars("vlan2", "vlan1", "ra0", NULL, "usb", "vlan1", NULL, "vlan3", 0);
 
 		nvram_set_int("btn_rst_gpio", 26|GPIO_ACTIVE_LOW); 
+		nvram_set_int("btn_pwr_gpio", 12|GPIO_ACTIVE_LOW); 
 		nvram_set_int("btn_wps_gpio", 2|GPIO_ACTIVE_LOW);
 		nvram_set_int("led_usb_gpio", 42|GPIO_ACTIVE_LOW);
 		nvram_set_int("led_lan_gpio", 41|GPIO_ACTIVE_LOW);

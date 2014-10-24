@@ -330,6 +330,10 @@ void btn_check(void)
 			}
 	}
 #endif
+	else if (button_pressed(BTN_PWR))//此处逻辑需要修改
+	{
+		_dprintf("\nbutton power pressed \n");
+	}
 	else
 	{
 		if (btn_pressed == 1)

@@ -26,6 +26,7 @@ static int gpio_values_loaded = 0;
 #define GPIO_DIR_OUT	1
 
 int btn_rst_gpio = 0x0ff;
+int btn_pwr_gpio = 0x0ff;
 int btn_wps_gpio = 0xff;
 int led_pwr_gpio = 0xff;
 int led_wps_gpio = 0xff;
@@ -71,7 +72,7 @@ int reset_qtn_gpio = 0xff;
 
 int init_gpio(void)
 {
-	char *btn_list[] = { "btn_rst_gpio", "btn_wps_gpio", "fan_gpio", "have_fan_gpio"
+	char *btn_list[] = { "btn_rst_gpio", "btn_pwr_gpio","btn_wps_gpio", "fan_gpio", "have_fan_gpio"
 #ifdef RTCONFIG_WIRELESS_SWITCH
 		, "btn_wifi_gpio"
 #endif
@@ -181,6 +182,7 @@ void get_gpio_values_once(void)
 	// TODO : add other models
 
 	btn_rst_gpio = nvram_get_int("btn_rst_gpio");
+	btn_pwr_gpio = nvram_get_int("btn_pwr_gpio");
 	btn_wps_gpio = nvram_get_int("btn_wps_gpio");
 	led_pwr_gpio = nvram_get_int("led_pwr_gpio");
 	led_wps_gpio = nvram_get_int("led_wps_gpio");
@@ -234,6 +236,9 @@ int button_pressed(int which)
 	switch(which) {
 		case BTN_RESET:
 			use_gpio = btn_rst_gpio;
+			break;
+		case BTN_PWR:
+			use_gpio = btn_pwr_gpio;
 			break;
 		case BTN_WPS:
 			use_gpio = btn_wps_gpio;
