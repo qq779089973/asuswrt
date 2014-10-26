@@ -242,7 +242,7 @@ void btn_check(void)
 #endif
 	{
 		TRACE_PT("button RESET pressed\n");
-		eval("/sbin/ejusb", "-1", "0") //卸载usb硬盘
+		eval("/sbin/ejusb", "-1", "0"); //卸载usb硬盘
 	/*--------------- Add BTN_RST MFG test ------------------------*/
 #ifdef RTCONFIG_DSL /* Paul add 2013/4/2 */
 			if((btn_count % 2)==0)
