@@ -180,9 +180,10 @@ int do_tftpd(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 		if (NetLoop(TFTPD) < 0) 
 			return 1;
 	}
-	else if (DETECT_WPS())	/* WPS button */
+/*
+	else if (DETECT_WPS())	// WPS button 
 	{
-		/* Make sure WPS button is pressed at least press_times * 0.01s. */
+		// Make sure WPS button is pressed at least press_times * 0.01s. 
 		while (DETECT_WPS() && i++ < press_times) {
 			udelay(10000);
 		}
@@ -202,6 +203,7 @@ int do_tftpd(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 			do_reset (NULL, 0, 0, NULL);
 		}
 	}
+*/
 	else
 #endif /* ! UBOOT_STAGE1 */
 	{

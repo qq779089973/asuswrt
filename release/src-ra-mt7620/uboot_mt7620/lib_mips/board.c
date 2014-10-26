@@ -1982,11 +1982,9 @@ void board_init_r (gd_t *id, ulong dest_addr)
 
 #ifdef ASUS_PRODUCT
 #if defined(ASUS_RTN14U) || defined(ASUS_RTAC52U)
-       /* turn off WAN, LAN, WLAN, USB LED */
-       mtk7620_set_gpio_pin(WAN_LED, 1);
-       mtk7620_set_gpio_pin(LAN_LED, 1);
-       mtk7620_set_gpio_pin(WIFI_2G_LED, 1);
-       mtk7620_set_gpio_pin(USB_LED, 1);
+	//turn on led red,turn off led blue
+	mtk7620_set_gpio_pin(LED_RED, 0);
+	mtk7620_set_gpio_pin(LED_BLUE, 1);
 #elif defined(ASUS_RTAC51U)
        mtk7620_set_gpio_pin(WIFI_2G_LED, 1);
        mtk7620_set_gpio_pin(USB_LED, 1);
@@ -2043,9 +2041,9 @@ void board_init_r (gd_t *id, ulong dest_addr)
                 do_tftpd(cmdtp, 0, 2, argv);    // ASUS chk
 #if defined(ASUS_RTN14U) || defined(ASUS_RTAC52U)
 		/* turn off WAN, LAN, USB LED */
-		mtk7620_set_gpio_pin(WAN_LED, 1);
-		mtk7620_set_gpio_pin(LAN_LED, 1);
-		mtk7620_set_gpio_pin(USB_LED, 1);
+		//mtk7620_set_gpio_pin(WAN_LED, 1);
+		//mtk7620_set_gpio_pin(LAN_LED, 1);
+		//mtk7620_set_gpio_pin(USB_LED, 1);
 #elif defined(ASUS_RTAC51U)
 		mtk7620_set_gpio_pin(USB_LED, 1);
 #endif

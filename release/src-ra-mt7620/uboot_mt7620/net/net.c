@@ -205,7 +205,7 @@ extern BUFFER_ELEM *rt2880_free_buf_entry_dequeue(VALID_BUFFER_STRUCT *hdr);
 
 #ifdef ASUS_PRODUCT
 extern void TftpdStart(void);
-extern void PWR_LEDON(void);
+//extern void PWR_LEDON(void);
 extern void LEDON(void);
 extern void LEDOFF(void);
 IPaddr_t TempServerIP=0;
@@ -565,7 +565,7 @@ restart:
 				ALL_LEDON();
 				LEDON();
 #else
-				PWR_LEDON();
+//				PWR_LEDON();
 #endif
                         } else{
 #if defined(UBOOT_STAGE1)

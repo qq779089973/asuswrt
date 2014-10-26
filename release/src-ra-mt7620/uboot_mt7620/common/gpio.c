@@ -382,7 +382,7 @@ void led_init(void)
 	ra_or(PRGIO_ADDR+0x9c, 1); // set LED as output
 	ra_or(PRGIO_ADDR+0x98, 0x0); // turn on LED
 #elif defined(ASUS_RTAC52U)
-	int i, led[] = { PWR_LED, WIFI_2G_LED, WAN_LED, LAN_LED, USB_LED };
+	int i, led[] = { LED_RED, ED_BLUE };
 
 	for (i = 0; i < ARRAY_SIZE(led); ++i) {
 		mtk7620_set_gpio_dir(led[i], 0);	/* Set LED as output */
@@ -452,7 +452,7 @@ unsigned long DETECT(void)
 	}
 	return key;
 }
-
+/*
 unsigned long DETECT_WPS(void)
 {
 	int key = 0;
@@ -468,15 +468,12 @@ void PWR_LEDON(void)
 {
 	mtk7620_set_gpio_pin(PWR_LED, 0);
 }
-
+*/
 void LEDON(void)
 {
 #if defined(ASUS_RTN14U) || defined(ASUS_RTAC52U)
-	mtk7620_set_gpio_pin(PWR_LED, 0);
-	mtk7620_set_gpio_pin(WAN_LED, 0);
-	mtk7620_set_gpio_pin(LAN_LED, 0);
-	mtk7620_set_gpio_pin(USB_LED, 0);
-	mtk7620_set_gpio_pin(WIFI_2G_LED, 0);
+	mtk7620_set_gpio_pin(LED_RED, 0);
+	mtk7620_set_gpio_pin(LED_BLUE, 0);
 #elif defined(ASUS_RTAC51U)
 	mtk7620_set_gpio_pin(PWR_LED, 0);
 	mtk7620_set_gpio_pin(USB_LED, 0);
@@ -489,11 +486,8 @@ void LEDON(void)
 void LEDOFF(void)
 {
 #if defined(ASUS_RTN14U) || defined(ASUS_RTAC52U)
-	mtk7620_set_gpio_pin(PWR_LED, 1);
-	mtk7620_set_gpio_pin(WAN_LED, 1);
-	mtk7620_set_gpio_pin(LAN_LED, 1);
-	mtk7620_set_gpio_pin(USB_LED, 1);
-	mtk7620_set_gpio_pin(WIFI_2G_LED, 1);
+	mtk7620_set_gpio_pin(LED_RED, 1);
+	mtk7620_set_gpio_pin(LED_BLUE, 1);
 #elif defined(ASUS_RTAC51U)
 	mtk7620_set_gpio_pin(PWR_LED, 1);
 	mtk7620_set_gpio_pin(USB_LED, 1);

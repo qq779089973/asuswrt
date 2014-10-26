@@ -4,14 +4,16 @@
 #if defined(MT7620_MP)
 /* LED, Button GPIO# definition */
 #if defined(ASUS_RTN14U)
-#define RST_BTN		1	/* I2C_SD */
-#define WPS_BTN		2	/* I2C_SCLK */
+#define RST_BTN		26	/* I2C_SD */
+//#define WPS_BTN		2	/* I2C_SCLK */
+#define LED_RED		13
+#define LED_BLUE	22
 
-#define PWR_LED		43	/* EPHY_LED3 */
-#define WIFI_2G_LED	72	/* WLAN_N */
-#define WAN_LED		40	/* EPHY_LED0 */
-#define LAN_LED		41	/* EPHY_LED1 */
-#define USB_LED		42	/* EPHY_LED2 */
+//#define PWR_LED		43	/* EPHY_LED3 */
+//#define WIFI_2G_LED	72	/* WLAN_N */
+//#define WAN_LED		40	/* EPHY_LED0 */
+//#define LAN_LED		41	/* EPHY_LED1 */
+//#define USB_LED		42	/* EPHY_LED2 */
 
 #elif defined(ASUS_RTAC52U)
 #define RST_BTN		1	/* I2C_SD */
