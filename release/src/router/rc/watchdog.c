@@ -177,9 +177,6 @@ int init_toggle(void)
 
 void btn_check(void)
 {
-	int cdisk_power_gpio,cdisk_use_gpio,ena;
-	
-	
 	if (nvram_match("asus_mfg", "1"))
 	{
 		//TRACE_PT("asus mfg btn check!!!\n");
@@ -276,11 +273,15 @@ void btn_check(void)
 				/* 0123456789 */
 				/* 0011100111 */
 					if ((btn_count % 10) < 2 || ((btn_count % 10) > 4 && (btn_count % 10) < 7)) //一直按住led灯闪烁
+					{
 						led_control(LED_BLUE, LED_OFF);
 						led_control(LED_RED, LED_OFF);
+					}
 					else
+					{
 						led_control(LED_BLUE, LED_OFF);
 						led_control(LED_RED, LED_ON);
+					}
 #endif
 				}
 			}
