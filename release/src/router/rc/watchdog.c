@@ -242,7 +242,7 @@ void btn_check(void)
 #endif
 	{
 		TRACE_PT("button RESET pressed\n");
-
+		eval("/sbin/ejusb", "-1", "0") //卸载usb硬盘
 	/*--------------- Add BTN_RST MFG test ------------------------*/
 #ifdef RTCONFIG_DSL /* Paul add 2013/4/2 */
 			if((btn_count % 2)==0)
@@ -275,10 +275,12 @@ void btn_check(void)
 #else
 				/* 0123456789 */
 				/* 0011100111 */
-					if ((btn_count % 10) < 2 || ((btn_count % 10) > 4 && (btn_count % 10) < 7))
-						led_control(LED_POWER, LED_OFF);
+					if ((btn_count % 10) < 2 || ((btn_count % 10) > 4 && (btn_count % 10) < 7)) //一直按住led灯闪烁
+						led_control(LED_BLUE, LED_OFF);
+						led_control(LED_RED, LED_OFF);
 					else
-						led_control(LED_POWER, LED_ON);
+						led_control(LED_BLUE, LED_OFF);
+						led_control(LED_RED, LED_ON);
 #endif
 				}
 			}
@@ -337,7 +339,7 @@ void btn_check(void)
 	{
 		_dprintf("\nbutton power pressed \n");
 		led_control(LED_RED, LED_ON);
-	//	led_control(LED_BLUE, LED_OFF);
+		led_control(LED_BLUE, LED_OFF);
 		if(eval("/sbin/ejusb", "-1", "0")==0) //调用api卸载usb
 		{	
 			_dprintf("\nGo TO Halt \n");
