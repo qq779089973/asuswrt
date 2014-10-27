@@ -4033,6 +4033,8 @@ dbg("boot/continue fail= %d/%d\n", nvram_get_int("Ate_boot_fail"),nvram_get_int(
 			nvram_set("success_start_service", "1");
 
 			force_free_caches();
+	led_control(LED_RED, LED_OFF);
+	led_control(LED_BLUE, LED_ON);
 
 if(nvram_match("commit_test", "1")) {
 	int x=0;

@@ -138,7 +138,7 @@ int init_gpio(void)
 		_dprintf("\ndebug gpio: %d value: %d\n", gpio_pin, enable);
 	}
 
-	//init led_red and led blue
+	//init led_red and led blue,turn on led red,turn off led blue
 	if((gpio_pin = (use_gpio = nvram_get_int("led_red_gpio")) & 0xff) != 0xff)
 	{
 		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
@@ -146,8 +146,8 @@ int init_gpio(void)
 	}
 	if((gpio_pin = (use_gpio = nvram_get_int("led_blue_gpio")) & 0xff) != 0xff)
 	{
-		enable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 1 : 0;
-		set_gpio(gpio_pin, enable);
+		disable = (use_gpio&GPIO_ACTIVE_LOW)==0 ? 0: 1;
+		set_gpio(gpio_pin, disable);
 	}
 
 	// Power of USB.
