@@ -172,24 +172,25 @@ int do_tftpd(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 	const int press_times = 1;
 	int i = 0;
 
-	if(DETECT())		/* Reset to default button */
+/*	if(DETECT())		//Reset to default button 
 	{
 		printf(" \n## Enter Rescue Mode ##\n");		
 		setenv("autostart", "no");
-		/* Wait forever for an image */
+		// Wait forever for an image 
 		if (NetLoop(TFTPD) < 0) 
 			return 1;
 	}
-/*
-	else if (DETECT_WPS())	// WPS button 
+
+
+	else if (DETECT())	// WPS button 
 	{
 		// Make sure WPS button is pressed at least press_times * 0.01s. 
-		while (DETECT_WPS() && i++ < press_times) {
+		while (DETECT() && i++ < press_times) {
 			udelay(10000);
 		}
 
 		if (i >= press_times) {
-			while (DETECT_WPS()) {
+			while (DETECT()) {
 				udelay(90000);
 				i++;
 				if (i & 1)
@@ -203,8 +204,7 @@ int do_tftpd(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 			do_reset (NULL, 0, 0, NULL);
 		}
 	}
-*/
-	else
+	else*/
 #endif /* ! UBOOT_STAGE1 */
 	{
 #if defined(UBOOT_STAGE1)
