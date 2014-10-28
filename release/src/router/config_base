@@ -11,7 +11,7 @@ RTCONFIG_EAPOL=y
 # RTCONFIG_BCMSMP is not set
 # RTCONFIG_BCMFA is not set
 # RTCONFIG_5301X is not set
-# RTCONFIG_SSH is not set
+RTCONFIG_SSH=y
 # RTCONFIG_CIFS is not set
 # RTCONFIG_BRCM_NAND_JFFS2 is not set
 # RTCONFIG_JFFS2 is not set
