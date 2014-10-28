@@ -1414,6 +1414,9 @@ void board_init_r (gd_t *id, ulong dest_addr)
 #endif
 #endif //CFG_ENV_IS_IN_FLASH
 
+	RALINK_REG(0x10000624)=RALINK_REG(0x10000624)|0x00400000;
+	RALINK_REG(0x10000620)=RALINK_REG(0x10000620)&0xffbfffff;
+
 	/* initialize malloc() area */
 	mem_malloc_init();
 	malloc_bin_reloc();
