@@ -135,9 +135,9 @@ ifeq ($(RTCONFIG_CIFS),y)
 OBJS += cifs.o
 endif
 
-ifeq ($(RTCONFIG_SSH),y)
-OBJS += ssh.o
-endif
+#ifeq ($(RTCONFIG_SSH),y)
+#OBJS += ssh.o
+#endif
 
 ifeq ($(RTCONFIG_PPTPD),y)
 OBJS += vpn.o
