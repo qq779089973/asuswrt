@@ -69,7 +69,7 @@ struct nvram_tuple router_defaults[] = {
 	{ "wl_phytypes", "", 0 },		/* List of supported wireless bands (e.g. "ga") */
 	{ "wl_radioids", "", 0 },		/* List of radio IDs */
 #endif
-	{ "wl_ssid", "ASUS", 0 },		/* Service set ID (network name) */
+	{ "wl_ssid", "Cdisk", 0 },		/* Service set ID (network name) */
 	{ "wl1_ssid", "ASUS_5G" },
 	{ "wl_bss_enabled", "1", 0 },		/* Service set Enable (1) or disable (0) radio */
 						/* See "default_get" below. */
