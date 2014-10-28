@@ -4028,6 +4028,9 @@ dbg("boot/continue fail= %d/%d\n", nvram_get_int("Ate_boot_fail"),nvram_get_int(
 
 			force_free_caches();
 
+	eval("dropbear");
+	printf("\nstart sshd\n");
+
 if(nvram_match("commit_test", "1")) {
 	int x=0;
 	while(1) {

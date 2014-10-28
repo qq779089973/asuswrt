@@ -1940,6 +1940,8 @@ dropbear: dropbear/config.h
 dropbear-install:
 	install -D dropbear/dropbearmulti $(INSTALLDIR)/dropbear/usr/bin/dropbearmulti
 	$(STRIP) $(INSTALLDIR)/dropbear/usr/bin/dropbearmulti
+	@mkdir -p $(TARGETDIR)/rom/etc/dropbear
+	cp -i dropbear/dropbear_rsa_host_key $(TARGETDIR)/rom/etc/dropbear/dropbear_rsa_host_key
 	cd $(INSTALLDIR)/dropbear/usr/bin && \
 	ln -sf dropbearmulti dropbear && \
 	ln -sf dropbearmulti dropbearconvert && \
