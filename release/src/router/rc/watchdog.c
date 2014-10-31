@@ -344,7 +344,7 @@ void btn_check(void)
 		if(eval("/sbin/ejusb", "-1", "0")==0) //调用api卸载usb
 		{	
 			_dprintf("\nGo TO Reboot \n");
-			eval("reboot");
+			reboot(RB_AUTOBOOT);
 		}
 		
 	}
