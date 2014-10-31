@@ -343,8 +343,8 @@ void btn_check(void)
 		led_control(LED_BLUE, LED_OFF);
 		if(eval("/sbin/ejusb", "-1", "0")==0) //调用api卸载usb
 		{	
-			_dprintf("\nGo TO Halt \n");
-			eval("halt");
+			_dprintf("\nGo TO Reboot \n");
+			eval("reboot");
 		}
 		
 	}
