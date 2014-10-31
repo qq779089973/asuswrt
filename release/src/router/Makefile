@@ -121,6 +121,7 @@ else
 obj-y += ated
 obj-y += flash
 obj-y += gpio
+obj-y += settxpower
 ifeq ($(RTN14U)$(RTAC52U)$(RTAC51U),y)
 else
 obj-y += hw_nat

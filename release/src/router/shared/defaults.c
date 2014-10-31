@@ -336,10 +336,10 @@ struct nvram_tuple router_defaults[] = {
 	{ "wl_expire", 			"0"	},
 	{ "wl_mbss", 		""	},
 #ifdef RTCONFIG_RALINK
-	{ "wl_TxPower",			"100" 	},
+	{ "wl_TxPower",			"1" 	},
 #else
 //	{ "wl_TxPower", 		"0"	},
-	{ "wl_TxPower",			"80"	},
+	{ "wl_TxPower",			"1"	},
 #endif
 
 #if defined (RTCONFIG_RALINK) || defined (RTCONFIG_BCMWL6)
