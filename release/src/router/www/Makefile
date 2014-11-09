@@ -36,7 +36,6 @@ endif
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.svg"`
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.htc"`
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.dict"`
-	chmod +x `find $(INSTALLDIR)/www/aria2_web/ -name "*.js"`
 
 ifeq ($(RTCONFIG_AUTODICT), y)
 	# now dict prep will generate necessary dict files to dest dir
@@ -48,6 +47,7 @@ ifeq ($(RTCONFIG_AUTODICT), y)
 	$(ASUSWRTTOOLSDIR2)/genshfile.pl $(ASUSWRTTOOLSDIR2) $(INSTALLDIR)/www $(SRCBASE)/image/compress.sh $(SRCBASE)/image/dictenum.txt $(SRCBASE)/image/output2.txt $(BUILD_NAME) $(SRCBASE)/image/output3.txt
 	chmod 777 $(SRCBASE)/image/compress.sh
 	sh $(SRCBASE)/image/compress.sh
+	chmod +x `find $(INSTALLDIR)/www/aria2_web/ -name "*.js"`
 else
 	for F in $(wildcard *.dict); do \
 		./gendict.pl $(BUILD_NAME) $$F $(INSTALLDIR)/www/$$F; \
