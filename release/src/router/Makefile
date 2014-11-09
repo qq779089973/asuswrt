@@ -122,7 +122,6 @@ obj-y += ated
 obj-y += flash
 obj-y += gpio
 obj-y += aria2
-obj-y += aria2_web
 ifeq ($(RTN14U)$(RTAC52U)$(RTAC51U),y)
 else
 obj-y += hw_nat
