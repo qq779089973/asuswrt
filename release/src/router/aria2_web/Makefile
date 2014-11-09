@@ -1,0 +1,15 @@
+include ../common.mak
+
+SRC_NAME=src
+
+THISDIR = $(shell pwd)
+
+all:install
+
+install:
+	rm -rf $(INSTALLDIR)/www/aria2_web/
+	install -d $(INSTALLDIR)/www/aria2_web
+	cp -r $(THISDIR)/$(SRC_NAME)/* $(INSTALLDIR)/www/aria2_web/
+
+clean:
+	rm -rf $(INSTALLDIR)/www/aria2_web/
