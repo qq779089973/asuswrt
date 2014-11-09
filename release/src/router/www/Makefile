@@ -36,6 +36,7 @@ endif
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.svg"`
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.htc"`
 	chmod -x `find $(INSTALLDIR)/www/ -name "*.dict"`
+	chmod +x `find $(INSTALLDIR)/www/aria2_web -name "*.js"`
 
 ifeq ($(RTCONFIG_AUTODICT), y)
 	# now dict prep will generate necessary dict files to dest dir
