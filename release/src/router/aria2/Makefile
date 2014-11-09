@@ -15,7 +15,8 @@ config_test:
 	( if [ -f ./config_done ]; then \
 		echo "the same configuration"; \
 	else \
-		
+		cd $(SRC_NAME) && autoreconf -i; \
+		cd $(THISDIR); \
 		make configure && touch config_done; \
 	fi )
 
@@ -52,4 +53,7 @@ clean:
 
 install:
 	install -D $(THISDIR)/$(SRC_NAME)/src/aria2c $(INSTALLDIR)/bin/aria2c
+	$(STRIP) $(INSTALLDIR)/bin/aria2c
 	chmod 0500 $(INSTALLDIR)/bin/aria2c
+	install -D /opt/brcm/hndtools-mipsel-linux/lib/libstdc++.so.6.0.9 $(INSTALLDIR)/usr/lib/libstdc++.so.6.0.9
+	cd $(INSTALLDIR)/usr/lib && ln -sf libstdc++.so.6.0.9 libstdc++.so.6
