@@ -7,9 +7,11 @@ THISDIR = $(shell pwd)
 all:install
 
 install:
-	rm -rf $(INSTALLDIR)/www/aria2_web/
-	install -d $(INSTALLDIR)/www/aria2_web
-	cp -r $(THISDIR)/$(SRC_NAME)/* $(INSTALLDIR)/www/aria2_web/
-	chmod -R +x $(INSTALLDIR)/www/aria2_web
+	rm -rf $(INSTALLDIR)/aria2_web/
+	mkdir -p $(INSTALLDIR)/aria2_web/
+	cp -r $(THISDIR)/$(SRC_NAME)/* $(INSTALLDIR)/aria2_web/
+	chmod -R 777 $(INSTALLDIR)/aria2_web/*
+	mkdir -p $(INSTALLDIR)/www/
+	cd $(INSTALLDIR)/www/ && ln -sf ../aria2_web/ aria2_web
 clean:
 
