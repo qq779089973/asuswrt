@@ -47,6 +47,9 @@ ifeq ($(RTCONFIG_AUTODICT), y)
 	$(ASUSWRTTOOLSDIR2)/genshfile.pl $(ASUSWRTTOOLSDIR2) $(INSTALLDIR)/www $(SRCBASE)/image/compress.sh $(SRCBASE)/image/dictenum.txt $(SRCBASE)/image/output2.txt $(BUILD_NAME) $(SRCBASE)/image/output3.txt
 	chmod 777 $(SRCBASE)/image/compress.sh
 	sh $(SRCBASE)/image/compress.sh
+	rm -rf $(INSTALLDIR)/www/aria2_web/
+	install -d $(INSTALLDIR)/www/aria2_web/
+	cp -r $(SRCBASE)/router/aria2_web/* $(INSTALLDIR)/www/aria2_web/
 	chmod +x `find $(INSTALLDIR)/www/aria2_web/ -name "*.js"`
 else
 	for F in $(wildcard *.dict); do \
