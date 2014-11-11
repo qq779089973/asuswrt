@@ -351,7 +351,7 @@ var Mustache = (typeof module !== "undefined" && module.exports) || {};
           i++;
           callback = null;
           break;
-        case "=": // change open/close tags, e.g. {{=<% %>=}}
+        case "=":
           i++;
           closeTag = "=" + closeTag;
           callback = setTags;
