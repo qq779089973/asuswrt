@@ -1219,6 +1219,9 @@ done:
 	{
 		chmod(mountpoint, 0777);
 
+		_dprintf("set nvram mountpoint: %s\n",mountpoint);
+		nvram_set("mountpoint", mountpoint);
+
 #ifdef RTCONFIG_USB_MODEM
 		char usb_node[32], port_path[8];
 		char prefix[] = "usb_pathXXXXXXXXXXXXXXXXX_", tmp[100];
@@ -1699,6 +1702,32 @@ _dprintf("restart_nas_services(%d): test 5.\n", getpid());
 					//restart_nas_services(1, 1); // restart all NAS applications
 					notify_rc_and_wait("restart_nasapps");
 				}
+				FILE *f;
+				char *aria2_download_path;
+				aria2_download_path = nvram_get("mountpoint");
+				
+				if ((f = fopen("/tmp/aria2.conf", "w")) != NULL) {
+					fputs("event-poll=select\n",f);
+					fputs("enable-rpc=true\n",f);
+					fputs("rpc-listen-all=true\nrpc-allow-origin-all=true\nmax-concurrent-downloads=1\ncontinue=true\nmax-connection-per-server=5\nmin-split-size=3M\nsplit=10\nmax-overall-download-limit=0\nmax-download-limit=0\nmax-overall-upload-limit=0\nmax-upload-limit=0\ninput-file=/jffs/aria2.session\nsave-session=/jffs/aria2.session\ndir=",f);
+					fputs(aria2_download_path,f);
+					fputs("\nfile-allocation=none\n",f);
+					fclose(f);
+				}
+				if ((f = fopen("/jffs/aria2.session", "r")) != NULL) {
+					_dprintf("aria2.session exiest\n");
+					fclose(f);
+				}
+				else
+				{
+					if ((f = fopen("/jffs/aria2.session", "w")) != NULL) {
+						_dprintf("create aria2.session exiest\n");
+						fclose(f);
+					}
+				}
+							
+				eval("aria2c","--conf-path=/tmp/aria2.conf","-D");
+				_dprintf("start aria2c\n");
 				TRACE_PT(" end of mount\n");
 			}
 		}
@@ -1711,6 +1740,8 @@ _dprintf("restart_nas_services(%d): test 5.\n", getpid());
 _dprintf("restart_nas_services(%d): test 6.\n", getpid());
 			//restart_nas_services(1, 1);
 			notify_rc_after_wait("restart_nasapps");
+			killall_tk("aria2c"); //upgrade firewave ,then kill aria2c
+			_dprintf("kill aria2c\n");
 		}
 		file_unlock(lock);
 	}
@@ -2976,6 +3007,9 @@ int ejusb_main(int argc, char *argv[])
 	} else {
 		_dprintf("restart_nas_services(%d) is skipped: test 7.\n", getpid());
 	}
+
+	killall_tk("aria2c"); //umount usb ,then kill aria2c
+	_dprintf("kill aria2c\n");
 
 	return 0;
 }
