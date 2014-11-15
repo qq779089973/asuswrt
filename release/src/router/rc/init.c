@@ -4030,6 +4030,20 @@ dbg("boot/continue fail= %d/%d\n", nvram_get_int("Ate_boot_fail"),nvram_get_int(
 
 	eval("dropbear");
 	printf("\nstart sshd\n");
+	if(nvram_match("shadowsocks_enable", "1")) {
+		FILE *fp; 
+		fp=fopen("/jffs/config.json","r"); 
+		if(fp==NULL) 
+		{
+			_dprintf("\nDon't exist /jffs/config.json,can't start shadowsocks-libev\n");
+		} 
+		else 
+		{ 
+			fclose(fp);
+			eval("ss-local","-c","/jffs/config.json");
+			_dprintf("\nstart shadowsocks\n");
+		} 
+	}
 
 if(nvram_match("commit_test", "1")) {
 	int x=0;
