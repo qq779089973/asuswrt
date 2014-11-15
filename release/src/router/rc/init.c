@@ -4083,6 +4083,10 @@ int reboothalt_main(int argc, char *argv[])
 	cprintf(reboot ? "Rebooting..." : "Shutting down...");
 	kill(1, reboot ? SIGTERM : SIGQUIT);
 
+	killall_tk("aria2c"); //reboot or halt ,then kill aria2c
+	_dprintf("kill aria2c\n");
+	
+
 #if defined(RTN14U) || defined(RTN65U) || defined(RTAC52U) || defined(RTAC51U)
 	def_reset_wait = 50;
 #endif
